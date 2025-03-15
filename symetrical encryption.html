@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parabolic Encryption</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: lightblue;
+            padding: 20px;
+        }
+        textarea {
+            width: 80%;
+            height: 100px;
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+			background-color: #FFB6C1;
+        }
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+			background-color: #FFB6C1;
+        }
+		    
+       
+        .custom-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+        .custom-button img {
+            width: 40px;
+            height: 40px;
+        }
+        .custom-button img:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <a href="https://jadeisdead.github.io/jadeisdead1/jadeisdead.html" target="_blank" class="custom-button">
+        <img src="https://media.tenor.com/yso9Ncqwm5UAAAAi/click-subscribe.gif" alt="Custom Button">
+    </a>
+    <h1>Parabolic Encryption & Decryption</h1>
+    <textarea id="message" placeholder="Enter your message"></textarea><br>
+    <input type="number" id="key" placeholder="Enter key (integer)"><br>
+    <button onclick="encryptMessage()">Encrypt</button>
+    <button onclick="decryptMessage()">Decrypt</button>
+    <h3>Result:</h3>
+    <textarea id="result" readonly></textarea>
+    
+    <script>
+        function parabolicEncrypt(char, key) {
+            let ascii = char.charCodeAt(0);
+            return Math.floor(ascii * ascii + key); 
+        }
+        
+        function parabolicDecrypt(num, key) {
+            return String.fromCharCode(Math.round(Math.sqrt(num - key)));
+        }
+        
+        function encryptMessage() {
+            let message = document.getElementById("message").value;
+            let key = parseInt(document.getElementById("key").value);
+            if (isNaN(key)) {
+                alert("Please enter a valid key");
+                return;
+            }
+            let encrypted = message.split('').map(char => parabolicEncrypt(char, key)).join('-');
+            document.getElementById("result").value = encrypted;
+        }
+        
+        function decryptMessage() {
+            let encryptedText = document.getElementById("message").value;
+            let key = parseInt(document.getElementById("key").value);
+            if (isNaN(key)) {
+                alert("INVALID KEY FUCKO");
+                return;
+            }
+            try {
+                let decrypted = encryptedText.split('-').map(num => parabolicDecrypt(parseInt(num), key)).join('');
+                document.getElementById("result").value = decrypted;
+            } catch (error) {
+                alert("Invalid decryption input or key fucko!");
+            }
+        }
+    </script>
+</body>
+  <footer>
+        <p><span class="reversed-copyright">&copy;</span> 2025 SEAL Ent. </p>
+    </footer>
+    
+<style>
+    .reversed-copyright {
+        display: inline-block;
+        transform: scaleX(-1);
+    }
+</style>
+</html>
